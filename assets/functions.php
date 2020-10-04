@@ -8,7 +8,7 @@ function validateUser($email) {
     try {
         $dsn = 'mysql:dbname=kututoring;host=localhost';
         $user = 'root';
-        $pass = '';
+        $pass = 'kututoring';
         $db = new PDO($dsn, $user, $pass);
         $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         $sql = "SELECT * FROM `users` WHERE email='$email'";
@@ -37,7 +37,7 @@ function reportSession($stuID, $email, $fName, $lName, $major, $courseNum, $note
     try {
         $dsn = 'mysql:dbname=kututoring;host=localhost';
         $user = 'root';
-        $pass = '';
+        $pass = 'kututoring';
         $db = new PDO($dsn, $user, $pass);
         $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         $sql = "INSERT INTO `sessions` (`stuID`, `email`, `fName`, `lName`, `major`, `courseNumber`, `notes`, `tutorLname`) VALUES ('$stuID', '$email', '$fName', '$lName', '$major', '$courseNum', '$notes', '$tutLName')";
@@ -57,7 +57,7 @@ function addTutor($stuID, $email, $passwd, $fName, $lName, $major) {
     try {
         $dsn = 'mysql:dbname=kututoring;host=localhost';
         $user = 'root';
-        $pass = '';
+        $pass = 'kututoring';
         $db = new PDO($dsn, $user, $pass);
         $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         $sql = "INSERT INTO `users` (`stuID`, `email`, `password`, `fName`, `lName`, `major`) VALUES ('$stuID', '$email', '$passwd', '$fName', '$lName', '$major')";
@@ -77,7 +77,7 @@ function removeTutor($email) {
     try {
         $dsn = 'mysql:dbname=kututoring;host=localhost';
         $user = 'root';
-        $pass = '';
+        $pass = 'kututoring';
         $db = new PDO($dsn, $user, $pass);
         $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         $sql = "DELETE FROM `users` WHERE `email` = '$email'";

@@ -14,12 +14,12 @@ $msgs[] = "";
                 header("Location: index");
                 exit();
             } else {
-                $msgs[] = "<p style='text-align:center; color:red; margin-top:15px;'>";
+                $msgs[] = "<p id='msg error' style='text-align:center; color:red; margin-top:15px;'>";
                 $msgs[] = "The Password entered is incorrect.";
                 $msgs[] = "</p>";
             }
         } else {
-            $msgs[] = "<p style='text-align:center; color:red; margin-top:15px;'>";
+            $msgs[] = "<p id='msg error' style='text-align:center; color:red; margin-top:15px;'>";
             $msgs[] = "The Email provided is incorrect.";
             $msgs[] = "</p>";
         }
@@ -37,7 +37,7 @@ $msgs[] = "";
     <link rel="stylesheet" href="assets/fonts/fontawesome-all.min.css">
     <link rel="stylesheet" href="assets/fonts/simple-line-icons.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.2.0/aos.css">
-    <link rel="stylesheet" href="assets/css/untitled.css">
+    <link rel="stylesheet" href="assets/css/style.css">
 </head>
 
 <body class="bg-gradient-primary">
@@ -55,6 +55,13 @@ $msgs[] = "";
                                     <div class="text-center">
                                         <h4 class="text-dark mb-4">Welcome Back!</h4>
                                     </div>
+                                    <?php
+                                        if (!empty($msgs)) {
+                                            foreach($msgs as $msg){	
+                                                print($msg);
+                                            }
+                                        }
+                                    ?>
                                     <form class="user" method="post" id="loginform" action="login">
                                         <div class="form-group"><input class="form-control form-control-user" type="email" id="email" aria-describedby="emailHelp" placeholder="Enter Email Address..." name="email"></div>
                                         <div class="form-group"><input class="form-control form-control-user" type="password" id="password" placeholder="Password" name="password"></div>
