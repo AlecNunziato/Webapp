@@ -20,27 +20,19 @@ function validateUser($email) {
     }
 }
 
-function isLoggedIn() {
-    if(!empty($_COOKIE['user'])) {
-        return true;
-    } else {
-        return false;
-    }
-}
-
 /* Function Name: reportSession
 * Description: Report Session given by tutor to a student
 * Parameters: stuID, email, fName, lName, major, course
 * Return Value: user information
 */
-function reportSession($stuID, $email, $fName, $lName, $major, $courseNum, $notes, $tutLName) {
+function reportSession($stuID, $email, $fName, $lName, $major, $courseNum, $tutLName) {
     try {
         $dsn = 'mysql:dbname=kututoring;host=localhost';
         $user = 'root';
         $pass = '';
         $db = new PDO($dsn, $user, $pass);
         $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        $sql = "INSERT INTO `sessions` (`stuID`, `email`, `fName`, `lName`, `major`, `courseNumber`, `notes`, `tutorLname`) VALUES ('$stuID', '$email', '$fName', '$lName', '$major', '$courseNum', '$notes', '$tutLName')";
+        $sql = "INSERT INTO `sessions` (`stuID`, `email`, `fName`, `lName`, `major`, `courseNumber`, `tutorLname`) VALUES ('$stuID', '$email', '$fName', '$lName', '$major', '$courseNum', '$tutLName')";
         $stmt = $db->query($sql);
     } catch (Exception $e) {
         print('<p>'.$e.'</p>');

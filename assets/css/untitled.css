@@ -1,0 +1,93 @@
+.bg-gradient-primary {
+  background-color: #701931;
+  background-image: linear-gradient(180deg,#701931 10%,#701931);
+  background-size: cover;
+}
+
+.btn.btn-primary.btn-block.text-white.btn-user {
+  color: #fff;
+  background-color: #B6A268;
+  border-color: #FFFF;
+}
+
+#bear-logo {
+  display: block;
+  margin: 0 auto 15px auto;
+}
+
+#nav-bear-logo {
+  width: 50px;
+  height: 50px;
+}
+
+.manage-radio .radio-label {
+  border: 1px solid rgba(0,0,0,0.14);
+  width: 48%;
+  margin: 0 auto;
+  text-align: center;
+  padding: 8px;
+  border-radius: 15px;
+}
+
+.manage-radio .radio {
+  display: none;
+}
+
+.manage-radio input[type=radio]:checked + label#add {
+  background-color: limegreen;
+  color: white;
+  box-shadow: 0px 0px 10px #888888;
+}
+
+.manage-radio input[type=radio]:checked + label#remove {
+  background-color: red;
+  color: white;
+  box-shadow: 0px 0px 10px #888888;
+}
+
+#remove {
+  margin-left: 2%;
+}
+
+#info {
+  margin-top: 10px;
+}
+
+.tutor-info {
+  position: relative;
+  justify-items: center;
+}
+
+.tutor-info .input-field {
+  width: 75%;
+  margin: 0 auto 10px auto;
+  display: block;
+  text-align: center;
+}
+
+.tutor-info .input-label {
+  width: 75%;
+  display: block;
+  margin: 0 auto 0 auto;
+  text-align: center;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.tutor-info .input-button {
+  width: 40%;
+  background-color: green;
+  margin: 15px auto 0 auto;
+  display: block;
+  box-shadow: 0px 0px 10px #888888;
+}
+
+input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type=number] {
+  -moz-appearance: textfield;
+}
+
