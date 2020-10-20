@@ -88,6 +88,45 @@ function removeTutor($email) {
     }
 }
 
+/* Function Name: removeCourse
+* Description: Removes Course(s) based on user input 
+* Parameters: coursePrefix, courseNumber, courseName, proctor, courseTime
+* Return Value: user information
+*/
+function removeCourse($coursePrefix, $courseNumber, $courseName, $proctor, $courseTime) {
+    try {
+        $dsn = 'mysql:dbname=kututoring;host=localhost';
+        $user = 'root';
+        $pass = 'kututoring';
+        $db = new PDO($dsn, $user, $pass);
+        $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        $sql = "DELETE FROM `courses` WHERE `coursePrefix` = '$coursePrefix'";
+        $stmt = $db->query($sql);
+    } catch (Exception $e) {
+        print('<p>'.$e.'</p>');
+        return array();
+    }
+}
+
+/* Function Name: addCourse
+* Description: Adds Course(s) based on user input 
+* Parameters: coursePrefix, courseNumber, courseName, proctor, courseTime
+* Return Value: user information
+*/
+function addCourse($coursePrefix, $courseNumber, $courseName, $proctor, $courseTime) {
+    try {
+        $dsn = 'mysql:dbname=kututoring;host=localhost';
+        $user = 'root';
+        $pass = 'kututoring';
+        $db = new PDO($dsn, $user, $pass);
+        $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        $sql = "INSERT INTO `courses` ('coursePrefix', 'courseNumber', 'courseName', 'proctor', 'courseTime') VALUES '$coursePrefix', '$courseNumber', '$courseName', '$proctor', '$courseTime'')";
+        $stmt = $db->query($sql);
+    } catch (Exception $e) {
+        print('<p>'.$e.'</p>');
+        return array();
+    }
+}
 /* HASH EXAMPLE
     $pass = strtoupper(hash('whirlpool', $_POST['password']));
     $pass = sprintf("%s%d%s$%s$", $data['SALT'], 24713018, $pass, "2y");
