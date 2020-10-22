@@ -33,7 +33,9 @@ if (isLoggedIn()) {
                 <hr class="sidebar-divider my-0">
                 <ul class="nav navbar-nav text-light" id="accordionSidebar">
                     <li class="nav-item"><a class="nav-link" href="index"><i class="fas fa-tachometer-alt"></i><span>Dashboard</span></a></li>
-                    <li class="nav-item"><?php if (unserialize($_COOKIE['user'])['permissions'] > 1) { ?><a class="nav-link" href="managetutor"><i class="fas fa-user"></i><span>Manage Tutors</span></a><?php } ?><a class="nav-link active" href="reportsession"><i class="icon-notebook"></i><span>Report Session</span></a></li>
+                    <?php if (unserialize($_COOKIE['user'])['permissions'] > 1) { ?><li class="nav-item"><a class="nav-link" href="managetutor"><i class="fas fa-user"></i><span>Manage Tutors</span></a></li><?php } ?>
+                    <?php if (unserialize($_COOKIE['user'])['permissions'] > 1) { ?><li class="nav-item"><a class="nav-link" href="managecourses"><i class="fas fa-user"></i><span>Manage Courses</span></a></li><?php } ?>
+                    <li class="nav-item"><a class="nav-link active" href="reportsession"><i class="icon-notebook"></i><span>Report Session</span></a></li>
                     <li class="nav-item"></li>
                 </ul>
                 <div class="text-center d-none d-md-inline"><button class="btn rounded-circle border-0" id="sidebarToggle" type="button"></button></div>

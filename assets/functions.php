@@ -15,7 +15,7 @@ function validateUser($email) {
         $stmt = $db->query($sql);
         return $stmt->fetch(PDO::FETCH_ASSOC);
     } catch (Exception $e) {
-        print('<p>'.$e.'</p>');
+        //print('<p>'.$e.'</p>');
         return array();
     }
 }
@@ -43,7 +43,7 @@ function reportSession($stuID, $email, $fName, $lName, $major, $courseNum, $note
         $sql = "INSERT INTO `sessions` (`stuID`, `email`, `fName`, `lName`, `major`, `courseNumber`, `notes`, `tutorLname`) VALUES ('$stuID', '$email', '$fName', '$lName', '$major', '$courseNum', '$notes', '$tutLName')";
         $stmt = $db->query($sql);
     } catch (Exception $e) {
-        print('<p>'.$e.'</p>');
+        //print('<p>'.$e.'</p>');
         return array();
     }
 }
@@ -63,7 +63,7 @@ function addTutor($stuID, $email, $passwd, $fName, $lName, $major) {
         $sql = "INSERT INTO `users` (`stuID`, `email`, `password`, `fName`, `lName`, `major`) VALUES ('$stuID', '$email', '$passwd', '$fName', '$lName', '$major')";
         $stmt = $db->query($sql);
     } catch (Exception $e) {
-        print('<p>'.$e.'</p>');
+        //print('<p>'.$e.'</p>');
         return array();
     }
 }
@@ -83,7 +83,7 @@ function removeTutor($email) {
         $sql = "DELETE FROM `users` WHERE `email` = '$email'";
         $stmt = $db->query($sql);
     } catch (Exception $e) {
-        print('<p>'.$e.'</p>');
+        //print('<p>'.$e.'</p>');
         return array();
     }
 }
@@ -93,18 +93,19 @@ function removeTutor($email) {
 * Parameters: coursePrefix, courseNumber, courseName, proctor, courseTime
 * Return Value: user information
 */
-function removeCourse($coursePrefix, $courseNumber, $courseName, $proctor, $courseTime) {
+function removeCourse($coursePrefix, $courseNumber, $courseSection) {
     try {
         $dsn = 'mysql:dbname=kututoring;host=localhost';
         $user = 'root';
         $pass = 'kututoring';
         $db = new PDO($dsn, $user, $pass);
         $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        $sql = "DELETE FROM `courses` WHERE `coursePrefix` = '$coursePrefix'";
-        $stmt = $db->query($sql);
+        $sql = "DELETE FROM `courses` WHERE `coursePrefix` = '$coursePrefix' AND `courseNumber` = '$courseNumber' AND `courseSection` = '$courseSection'";
+        $stmt = $db->query($sql)->rowCount();
+        return $stmt;
     } catch (Exception $e) {
-        print('<p>'.$e.'</p>');
-        return array();
+        //print('<p>'.$e.'</p>');
+        return false;
     }
 }
 
@@ -113,18 +114,19 @@ function removeCourse($coursePrefix, $courseNumber, $courseName, $proctor, $cour
 * Parameters: coursePrefix, courseNumber, courseName, proctor, courseTime
 * Return Value: user information
 */
-function addCourse($coursePrefix, $courseNumber, $courseName, $proctor, $courseTime) {
+function addCourse($coursePrefix, $courseNumber, $courseSection, $courseName, $proctor, $courseTime) {
     try {
         $dsn = 'mysql:dbname=kututoring;host=localhost';
         $user = 'root';
         $pass = 'kututoring';
         $db = new PDO($dsn, $user, $pass);
         $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        $sql = "INSERT INTO `courses` ('coursePrefix', 'courseNumber', 'courseName', 'proctor', 'courseTime') VALUES '$coursePrefix', '$courseNumber', '$courseName', '$proctor', '$courseTime'')";
-        $stmt = $db->query($sql);
+        $sql = "INSERT INTO `courses` (`coursePrefix`, `courseNumber`, `courseSection`, `courseName`, `proctor`, `courseTime`) VALUES ('$coursePrefix', '$courseNumber', '$courseSection', '$courseName', '$proctor', '$courseTime')";
+        $stmt = $db->query($sql)->rowCount();
+        return $stmt;
     } catch (Exception $e) {
-        print('<p>'.$e.'</p>');
-        return array();
+        //print('<p>'.$e.'</p>');
+        return false;
     }
 }
 /* HASH EXAMPLE
