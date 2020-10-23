@@ -20,6 +20,27 @@ function validateUser($email) {
     }
 }
 
+/* Function Name: getStudentHistory
+* Description: Get Student history based on data provided
+* Parameters: None
+* Return Value: Array of student history
+*/
+function getStudentHistory() {
+    try {
+        $dsn = 'mysql:dbname=kututoring;host=localhost';
+        $user = 'root';
+        $pass = 'kututoring';
+        $db = new PDO($dsn, $user, $pass);
+        $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        $sql = "SELECT * FROM `sessions`";
+        $stmt = $db->query($sql);
+        return $stmt->fetchALL(PDO::FETCH_ASSOC);
+    } catch (Exception $e) {
+        //print('<p>'.$e.'</p>');
+        return array();
+    }
+}
+
 function isLoggedIn() {
     if(!empty($_COOKIE['user'])) {
         return true;
@@ -33,14 +54,14 @@ function isLoggedIn() {
 * Parameters: stuID, email, fName, lName, major, course
 * Return Value: user information
 */
-function reportSession($stuID, $email, $fName, $lName, $major, $courseNum, $notes, $tutLName) {
+function reportSession($stuID, $email, $fName, $lName, $major, $course, $notes, $tutLName) {
     try {
         $dsn = 'mysql:dbname=kututoring;host=localhost';
         $user = 'root';
         $pass = 'kututoring';
         $db = new PDO($dsn, $user, $pass);
         $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        $sql = "INSERT INTO `sessions` (`stuID`, `email`, `fName`, `lName`, `major`, `courseNumber`, `notes`, `tutorLname`) VALUES ('$stuID', '$email', '$fName', '$lName', '$major', '$courseNum', '$notes', '$tutLName')";
+        $sql = "INSERT INTO `sessions` (`stuID`, `email`, `fName`, `lName`, `major`, `course`, `notes`, `tutorLname`) VALUES ('$stuID', '$email', '$fName', '$lName', '$major', '$course', '$notes', '$tutLName')";
         $stmt = $db->query($sql);
     } catch (Exception $e) {
         //print('<p>'.$e.'</p>');
@@ -90,8 +111,8 @@ function removeTutor($email) {
 
 /* Function Name: removeCourse
 * Description: Removes Course(s) based on user input 
-* Parameters: coursePrefix, courseNumber, courseName, proctor, courseTime
-* Return Value: user information
+* Parameters: coursePrefix, courseNumber, courseSection
+* Return Value: Rows Deleted
 */
 function removeCourse($coursePrefix, $courseNumber, $courseSection) {
     try {
@@ -111,8 +132,8 @@ function removeCourse($coursePrefix, $courseNumber, $courseSection) {
 
 /* Function Name: addCourse
 * Description: Adds Course(s) based on user input 
-* Parameters: coursePrefix, courseNumber, courseName, proctor, courseTime
-* Return Value: user information
+* Parameters: coursePrefix, courseNumber, courseSection, courseName, proctor, courseTime
+* Return Value: Rows Added
 */
 function addCourse($coursePrefix, $courseNumber, $courseSection, $courseName, $proctor, $courseTime) {
     try {

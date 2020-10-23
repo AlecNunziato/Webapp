@@ -32,6 +32,7 @@ if (!isLoggedIn()) {
                 <hr class="sidebar-divider my-0">
                 <ul class="nav navbar-nav text-light" id="accordionSidebar">
                     <li class="nav-item"><a class="nav-link" href="index"><i class="fas fa-tachometer-alt"></i><span>Dashboard</span></a></li>
+                    <li class="nav-item"><a class="nav-link" href="sessionHistory"><i class="fas fa-tachometer-alt"></i><span>Session History</span></a></li>
                     <?php if (unserialize($_COOKIE['user'])['permissions'] > 1) { ?><li class="nav-item"><a class="nav-link" href="managetutor"><i class="fas fa-user"></i><span>Manage Tutors</span></a></li><?php } ?>
                     <?php if (unserialize($_COOKIE['user'])['permissions'] > 1) { ?><li class="nav-item"><a class="nav-link active" href="managecourses"><i class="fas fa-user"></i><span>Manage Courses</span></a></li><?php } ?>
                     <li class="nav-item"><a class="nav-link" href="reportsession"><i class="icon-notebook"></i><span>Report Session</span></a></li>
@@ -47,13 +48,12 @@ if (!isLoggedIn()) {
                         <ul class="nav navbar-nav flex-nowrap ml-auto">
                             <li class="nav-item dropdown no-arrow">
                                 <div class="nav-item dropdown no-arrow"><a class="dropdown-toggle nav-link" data-toggle="dropdown" aria-expanded="false" href="#"><span class="d-none d-lg-inline mr-2 text-gray-600 small"><?php print_r(unserialize($_COOKIE['user'])['fName'] . ' ' . unserialize($_COOKIE['user'])['lName']); ?></span><img class="border rounded-circle img-profile" src="assets/img/avatars/avatar5.jpeg"></a>
-                                    <div
-                                        class="dropdown-menu shadow dropdown-menu-right animated--grow-in"><a class="dropdown-item" href="signout"><i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>&nbsp;Logout</a></div>
+                                    <div class="dropdown-menu shadow dropdown-menu-right animated--grow-in"><a class="dropdown-item" href="signout"><i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>&nbsp;Logout</a></div>
+                                </div>
+                            </li>
+                        </ul>
                     </div>
-                    </li>
-                    </ul>
-            </div>
-            </nav>
+                </nav>
             <div class="container-fluid">
                 <div class="d-sm-flex justify-content-between align-items-center mb-4">
                     <h3 class="text-dark mb-0">Manage Courses</h3>
@@ -68,7 +68,6 @@ if (!isLoggedIn()) {
                         } else {
                             print("<div class=\"alert alert-danger\" role=\"alert\">There was an error in your input, please try again.</div>");
                         }
-                        //addTutor($data['studentID'], $data['email'], $data['password'], $data['fName'], $data['lName'], $data['major']);
                     } elseif ($data['action'] == 'remove') {
                         $done = removeCourse($data['coursePrefix'], $data['courseNumber'], $data['courseSection']);
                         if ($done) {
@@ -76,7 +75,6 @@ if (!isLoggedIn()) {
                         } else {
                             print("<div class=\"alert alert-danger\" role=\"alert\">Could not find " . $data['coursePrefix'] . " " . $data['courseNumber'] . "-" . $data['courseSection'] . ".</div>");
                         }
-                        //removeTutor($data['email']);
                     } else {
                         print("<p>Invalid Option</p>");
                     }

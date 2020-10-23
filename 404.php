@@ -26,9 +26,16 @@ include "assets/functions.php";
                 </a>
                 <hr class="sidebar-divider my-0">
                 <ul class="nav navbar-nav text-light" id="accordionSidebar">
-                    <?php if (isLoggedIn()) { ?><li class="nav-item"><a class="nav-link" href="index.php"><i class="fas fa-tachometer-alt"></i><span>Dashboard</span></a></li>
-                    <li class="nav-item"><?php if (unserialize($_COOKIE['user'])['permissions'] > 1) { ?><a class="nav-link" href="managetutor.php"><i class="fas fa-user"></i><span>Manage Tutors</span></a><?php } ?><a class="nav-link" href="reportsession.php"><i class="icon-notebook"></i><span>Report Session</span></a></li>
-                    <li class="nav-item"></li><?php } else { ?> <li class="nav-item"><a class="nav-link" href="login.php"><i class="fas fa-user"></i><span>Sign In</span></a> <?php } ?>
+                    <?php if (!empty($_COOKIE['user'])) { ?>
+                    <li class="nav-item"><a class="nav-link" href="index"><i class="fas fa-tachometer-alt"></i><span>Dashboard</span></a></li>
+                    <li class="nav-item"><a class="nav-link" href="sessionHistory"><i class="fas fa-tachometer-alt"></i><span>Session History</span></a></li>
+                        <?php if (unserialize($_COOKIE['user'])['permissions'] > 1) { ?><li class="nav-item"><a class="nav-link" href="managetutor"><i class="fas fa-user"></i><span>Manage Tutors</span></a></li><?php } ?>
+                        <?php if (unserialize($_COOKIE['user'])['permissions'] > 1) { ?><li class="nav-item"><a class="nav-link" href="managecourses"><i class="fas fa-user"></i><span>Manage Courses</span></a></li><?php } ?>
+                        <li class="nav-item"><a class="nav-link" href="reportsession"><i class="icon-notebook"></i><span>Report Session</span></a></li>
+                    <?php } else { ?>
+                        <li class="nav-item"><a class="nav-link" href="login"><i class="fa fa-unlock-alt"></i><span> Log In</span></a></li>
+                    <?php } ?>
+                    <li class="nav-item"></li>
                 </ul>
                 <div class="text-center d-none d-md-inline"><button class="btn rounded-circle border-0" id="sidebarToggle" type="button"></button></div>
             </div>
