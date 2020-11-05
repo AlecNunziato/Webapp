@@ -63,7 +63,12 @@ if (isLoggedIn()) {
                 <?php
                     if(!empty($_POST)) {
                         $tutLastName = unserialize($_COOKIE['user'])['lName'];
-                        reportSession($_POST['studentID'], $_POST['email'], $_POST['fName'], $_POST['lName'], $_POST['major'], $_POST['course'], $_POST['notes'], $tutLastName);
+                        $done = reportSession($_POST['studentID'], $_POST['email'], $_POST['fName'], $_POST['lName'], $_POST['major'], $_POST['course'], $_POST['notes'], $tutLastName);
+                        if ($done) {
+                            print("<div class=\"alert alert-success\" role=\"alert\">Session has been reported</div>");
+                        } else {
+                            print("<div class=\"alert alert-danger\" role=\"alert\">There was an error in your input, please try again.</div>");
+                        }
                     }
                 ?>
                 <div class="row">

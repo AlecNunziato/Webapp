@@ -62,7 +62,8 @@ function reportSession($stuID, $email, $fName, $lName, $major, $course, $notes, 
         $db = new PDO($dsn, $user, $pass);
         $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         $sql = "INSERT INTO `sessions` (`stuID`, `email`, `fName`, `lName`, `major`, `course`, `notes`, `tutorLname`) VALUES ('$stuID', '$email', '$fName', '$lName', '$major', '$course', '$notes', '$tutLName')";
-        $stmt = $db->query($sql);
+        $stmt = $db->query($sql)->rowCount();
+        return $stmt;
     } catch (Exception $e) {
         //print('<p>'.$e.'</p>');
         return array();
@@ -82,7 +83,8 @@ function addTutor($stuID, $email, $passwd, $fName, $lName, $major) {
         $db = new PDO($dsn, $user, $pass);
         $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         $sql = "INSERT INTO `users` (`stuID`, `email`, `password`, `fName`, `lName`, `major`) VALUES ('$stuID', '$email', '$passwd', '$fName', '$lName', '$major')";
-        $stmt = $db->query($sql);
+        $stmt = $db->query($sql)->rowCount();
+        return $stmt;
     } catch (Exception $e) {
         //print('<p>'.$e.'</p>');
         return array();
@@ -102,7 +104,8 @@ function removeTutor($email) {
         $db = new PDO($dsn, $user, $pass);
         $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         $sql = "DELETE FROM `users` WHERE `email` = '$email'";
-        $stmt = $db->query($sql);
+        $stmt = $db->query($sql)->rowCount();
+        return $stmt;
     } catch (Exception $e) {
         //print('<p>'.$e.'</p>');
         return array();

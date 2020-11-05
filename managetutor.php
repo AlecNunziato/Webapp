@@ -63,9 +63,19 @@ if (!isLoggedIn()) {
                 if(!empty($_POST)) {
                     $data = $_POST;
                     if ($data['action'] == 'add') {
-                        addTutor($data['studentID'], $data['email'], $data['password'], $data['fName'], $data['lName'], $data['major']);
+                        $done = addTutor($data['studentID'], $data['email'], $data['password'], $data['fName'], $data['lName'], $data['major']);
+                        if ($done) {
+                            print("<div class=\"alert alert-success\" role=\"alert\">" . $data['fName'] . " " . $data['lName'] . " has been added.</div>");
+                        } else {
+                            print("<div class=\"alert alert-danger\" role=\"alert\">There was an error in your input, please try again.</div>");
+                        }
                     } elseif ($data['action'] == 'remove') {
-                        removeTutor($data['email']);
+                        $done = removeTutor($data['email']);
+                        if ($done) {
+                            print("<div class=\"alert alert-success\" role=\"alert\">" . $data['email'] . " has been removed.</div>");
+                        } else {
+                            print("<div class=\"alert alert-danger\" role=\"alert\">There was an error in your input, please try again.</div>");
+                        }
                     } else {
                         print("<p>Invalid Option</p>");
                     }
