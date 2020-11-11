@@ -41,11 +41,30 @@ function getStudentHistory() {
     }
 }
 
+/* Function Name: isLoggedIn
+* Description: Checks if the user is logged in
+* Parameters: None
+* Return Value: True if the user is logged in, False if the user is logged out
+*/
 function isLoggedIn() {
     if(!empty($_COOKIE['user'])) {
         return true;
     } else {
         return false;
+    }
+}
+
+/* Function Name: getUserPerms
+* Description: Get users permissions
+* Parameters: None
+* Return Value: User Permission Level
+*/
+function checkPerms() {
+    if(!empty($_COOKIE['user'])) {
+        $permLevel = unserialize($_COOKIE['user'])['permissions']
+        return $permLevel
+    } else {
+        return 0;
     }
 }
 
