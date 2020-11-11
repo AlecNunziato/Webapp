@@ -120,6 +120,40 @@ if (!($permissionLevel > 0)) {
                                 </form>
                             </div>
                         </div>
+                        <div class="card shadow">
+                            <div class="card-header py-3">
+                                <p class="text-primary m-0 font-weight-bold">Course List</p>
+                            </div>
+                            <div class="card-body">
+                                <div class="table-responsive table mt-2" id="dataTable" role="grid" aria-describedby="dataTable_info">
+                                    <table class="table my-0" id="courseList">
+                                        <thead>
+                                            <tr>
+                                                <th>Prefix</th>
+                                                <th>Number</th>
+                                                <th>Section</th>
+                                                <th>Name</th>
+                                                <th>Proctor</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <?php
+                                                $courses = getCourses();
+                                                foreach($courses as $course) {
+                                                    print('<tr>');
+                                                        print('<td>'.$course['coursePrefix'].'</td>');
+                                                        print('<td>'.$course['courseNumber'].'</td>');
+                                                        print('<td>'.$course['courseSection'].'</td>');
+                                                        print('<td>'.$course['courseName'].'</td>');
+                                                        print('<td>'.$course['proctor'].'</td>');
+                                                    print('</tr>');
+                                                }
+                                            ?>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -136,6 +170,8 @@ if (!($permissionLevel > 0)) {
     <script src="assets/js/bs-init.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.2.0/aos.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.js"></script>
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.2/css/jquery.dataTables.min.css"></style>
+    <script type="text/javascript" src="https://cdn.datatables.net/1.10.2/js/jquery.dataTables.min.js"></script>
     <script src="assets/js/theme.js"></script>
     <script>
         $(document).ready(function() {
@@ -146,6 +182,11 @@ if (!($permissionLevel > 0)) {
                     document.getElementById("form-data").innerHTML = '<label class="input-label" for="coursePrefix">Course Prefix</label><input class="form-control input-field" type="text" name="coursePrefix" required><label class="input-label" for="courseNumber">Course Number</label><input class="form-control input-field" type="number" name="courseNumber" required><label class="input-label" for="courseSection">Course Section</label><input class="form-control input-field" type="number" name="courseSection" required><button class="btn btn-primary input-button" type="submit">Submit</button>';
                 }
             });
+        });
+    </script>
+    <script>
+        $(document).ready(function(){
+            $('#tutorList').dataTable();
         });
     </script>
 </body>

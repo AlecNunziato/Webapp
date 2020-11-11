@@ -127,7 +127,7 @@ if (!($permissionLevel > 0)) {
                             </div>
                             <div class="card-body">
                                 <div class="table-responsive table mt-2" id="dataTable" role="grid" aria-describedby="dataTable_info">
-                                    <table class="table my-0" id="studentHistTable">
+                                    <table class="table my-0" id="tutorList">
                                         <thead>
                                             <tr>
                                                 <th>Student ID</th>
@@ -145,7 +145,7 @@ if (!($permissionLevel > 0)) {
                                                         print('<td>'.$tutor['stuID'].'</td>');
                                                         print('<td>'.$tutor['email'].'</td>');
                                                         print('<td>'.$tutor['fName'].'</td>');
-                                                        print('<td>'.$tutor['lName'].' '.$session['lName'].'</td>');
+                                                        print('<td>'.$tutor['lName'].'</td>');
                                                         print('<td>'.$tutor['major'].'</td>');
                                                     print('</tr>');
                                                 }
@@ -187,7 +187,7 @@ if (!($permissionLevel > 0)) {
     </script>
     <script>
         $(document).ready(function(){
-            $('#studentHistTable').dataTable();
+            $('#tutorList').dataTable();
         });
     </script>
 </body>

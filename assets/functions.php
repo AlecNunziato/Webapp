@@ -152,6 +152,27 @@ function getTutors() {
     }
 }
 
+/* Function Name: getTutors
+* Description: Gets a list of active tutors
+* Parameters: None
+* Return Value: An array of current tutors
+*/
+function getCourses() {
+    try {
+        $dsn = 'mysql:dbname=kututoring;host=localhost';
+        $user = 'root';
+        $pass = 'kututoring';
+        $db = new PDO($dsn, $user, $pass);
+        $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        $sql = "SELECT * FROM `courses`";
+        $stmt = $db->query($sql);
+        return $stmt->fetchALL(PDO::FETCH_ASSOC);
+    } catch (Exception $e) {
+        //print('<p>'.$e.'</p>');
+        return array();
+    }
+}
+
 /* Function Name: removeCourse
 * Description: Removes Course(s) based on user input 
 * Parameters: coursePrefix, courseNumber, courseSection
