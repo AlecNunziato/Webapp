@@ -116,6 +116,40 @@ if (!isLoggedIn()) {
                                 </form>
                             </div>
                         </div>
+                        <div class="card shadow">
+                            <div class="card-header py-3">
+                                <p class="text-primary m-0 font-weight-bold">Tutor List</p>
+                            </div>
+                            <div class="card-body">
+                                <div class="table-responsive table mt-2" id="dataTable" role="grid" aria-describedby="dataTable_info">
+                                    <table class="table my-0" id="studentHistTable">
+                                        <thead>
+                                            <tr>
+                                                <th>Student ID</th>
+                                                <th>Email</th>
+                                                <th>First Name</th>
+                                                <th>Last Name</th>
+                                                <th>Major</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <?php
+                                                $tutors = getTutors();
+                                                foreach($tutors as $tutor) {
+                                                    print('<tr>');
+                                                        print('<td>'.$tutor['stuID'].'</td>');
+                                                        print('<td>'.$tutor['email'].'</td>');
+                                                        print('<td>'.$tutor['fName'].'</td>');
+                                                        print('<td>'.$tutor['lName'].' '.$session['lName'].'</td>');
+                                                        print('<td>'.$tutor['major'].'</td>');
+                                                    print('</tr>');
+                                                }
+                                            ?>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -132,6 +166,8 @@ if (!isLoggedIn()) {
     <script src="assets/js/bs-init.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.2.0/aos.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.js"></script>
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.2/css/jquery.dataTables.min.css"></style>
+    <script type="text/javascript" src="https://cdn.datatables.net/1.10.2/js/jquery.dataTables.min.js"></script>
     <script src="assets/js/theme.js"></script>
     <script>
         $(document).ready(function() {
@@ -142,6 +178,11 @@ if (!isLoggedIn()) {
                     document.getElementById("form-data").innerHTML = '<label class="input-label" for="email">Email</label><input class="form-control input-field" type="email" name="email" required><button class="btn btn-primary input-button" type="submit">Submit</button>';
                 }
             });
+        });
+    </script>
+    <script>
+        $(document).ready(function(){
+            $('#studentHistTable').dataTable();
         });
     </script>
 </body>
