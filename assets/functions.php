@@ -59,7 +59,7 @@ function isLoggedIn() {
 * Parameters: None
 * Return Value: User Permission Level
 */
-function checkPerms() {
+function getUserPerms() {
     if(!empty($_COOKIE['user'])) {
         $permLevel = unserialize($_COOKIE['user'])['permissions'];
         return $permLevel;
