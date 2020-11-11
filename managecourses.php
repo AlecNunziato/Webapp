@@ -186,7 +186,7 @@ if (!($permissionLevel > 0)) {
     </script>
     <script>
         $(document).ready(function(){
-            $('#tutorList').dataTable();
+            $('#courseList').dataTable();
         });
     </script>
 </body>
