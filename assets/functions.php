@@ -1,4 +1,20 @@
 <?php
+// DATABASE INFO -- START
+$dbName = 'kututoring';
+$dbHost = 'localhost';
+$dbUser = 'root';
+$dbPass = 'kututoring';
+// DATABASE INFO -- END
+
+/* Function Name: getDB
+* Description: Retrive the Database PDO
+* Parameters: None
+* Return Value: user information
+*/
+function getDB() {
+    $dsn = 'mysql:dbname=' . $GLOBALS['dbName'] . ';host=' . $GLOBALS['dbHost'];
+    return new PDO($dsn, $GLOBALS['dbUser'], $GLOBALS['dbPass']);
+}
 /* Function Name: validateUser
 * Description: Check user login to validate that they are a user
 * Parameters: email, password
@@ -6,10 +22,7 @@
 */
 function validateUser($email) {
     try {
-        $dsn = 'mysql:dbname=kututoring;host=localhost';
-        $user = 'root';
-        $pass = 'kututoring';
-        $db = new PDO($dsn, $user, $pass);
+        $db = getDB();
         $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         $sql = "SELECT * FROM `users` WHERE email='$email'";
         $stmt = $db->query($sql);
@@ -27,10 +40,7 @@ function validateUser($email) {
 */
 function getStudentHistory() {
     try {
-        $dsn = 'mysql:dbname=kututoring;host=localhost';
-        $user = 'root';
-        $pass = 'kututoring';
-        $db = new PDO($dsn, $user, $pass);
+        $db = getDB();
         $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         $sql = "SELECT * FROM `sessions`";
         $stmt = $db->query($sql);
@@ -75,10 +85,7 @@ function getUserPerms() {
 */
 function reportSession($stuID, $email, $fName, $lName, $major, $course, $notes, $tutLName) {
     try {
-        $dsn = 'mysql:dbname=kututoring;host=localhost';
-        $user = 'root';
-        $pass = 'kututoring';
-        $db = new PDO($dsn, $user, $pass);
+        $db = getDB();
         $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         $sql = "INSERT INTO `sessions` (`stuID`, `email`, `fName`, `lName`, `major`, `course`, `notes`, `tutorLname`) VALUES ('$stuID', '$email', '$fName', '$lName', '$major', '$course', '$notes', '$tutLName')";
         $stmt = $db->query($sql)->rowCount();
@@ -96,10 +103,7 @@ function reportSession($stuID, $email, $fName, $lName, $major, $course, $notes, 
 */
 function addTutor($stuID, $email, $passwd, $fName, $lName, $major) {
     try {
-        $dsn = 'mysql:dbname=kututoring;host=localhost';
-        $user = 'root';
-        $pass = 'kututoring';
-        $db = new PDO($dsn, $user, $pass);
+        $db = getDB();
         $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         $sql = "INSERT INTO `users` (`stuID`, `email`, `password`, `fName`, `lName`, `major`) VALUES ('$stuID', '$email', '$passwd', '$fName', '$lName', '$major')";
         $stmt = $db->query($sql)->rowCount();
@@ -117,10 +121,7 @@ function addTutor($stuID, $email, $passwd, $fName, $lName, $major) {
 */
 function removeTutor($email) {
     try {
-        $dsn = 'mysql:dbname=kututoring;host=localhost';
-        $user = 'root';
-        $pass = 'kututoring';
-        $db = new PDO($dsn, $user, $pass);
+        $db = getDB();
         $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         $sql = "DELETE FROM `users` WHERE `email` = '$email'";
         $stmt = $db->query($sql)->rowCount();
@@ -138,10 +139,7 @@ function removeTutor($email) {
 */
 function getTutors() {
     try {
-        $dsn = 'mysql:dbname=kututoring;host=localhost';
-        $user = 'root';
-        $pass = 'kututoring';
-        $db = new PDO($dsn, $user, $pass);
+        $db = getDB();
         $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         $sql = "SELECT * FROM `users`";
         $stmt = $db->query($sql);
@@ -159,10 +157,7 @@ function getTutors() {
 */
 function getCourses() {
     try {
-        $dsn = 'mysql:dbname=kututoring;host=localhost';
-        $user = 'root';
-        $pass = 'kututoring';
-        $db = new PDO($dsn, $user, $pass);
+        $db = getDB();
         $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         $sql = "SELECT * FROM `courses`";
         $stmt = $db->query($sql);
@@ -180,10 +175,7 @@ function getCourses() {
 */
 function removeCourse($coursePrefix, $courseNumber, $courseSection) {
     try {
-        $dsn = 'mysql:dbname=kututoring;host=localhost';
-        $user = 'root';
-        $pass = 'kututoring';
-        $db = new PDO($dsn, $user, $pass);
+        $db = getDB();
         $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         $sql = "DELETE FROM `courses` WHERE `coursePrefix` = '$coursePrefix' AND `courseNumber` = '$courseNumber' AND `courseSection` = '$courseSection'";
         $stmt = $db->query($sql)->rowCount();
@@ -201,10 +193,7 @@ function removeCourse($coursePrefix, $courseNumber, $courseSection) {
 */
 function addCourse($coursePrefix, $courseNumber, $courseSection, $courseName, $proctor, $courseTime) {
     try {
-        $dsn = 'mysql:dbname=kututoring;host=localhost';
-        $user = 'root';
-        $pass = 'kututoring';
-        $db = new PDO($dsn, $user, $pass);
+        $db = getDB();
         $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         $sql = "INSERT INTO `courses` (`coursePrefix`, `courseNumber`, `courseSection`, `courseName`, `proctor`, `courseTime`) VALUES ('$coursePrefix', '$courseNumber', '$courseSection', '$courseName', '$proctor', '$courseTime')";
         $stmt = $db->query($sql)->rowCount();
