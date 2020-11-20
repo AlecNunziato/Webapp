@@ -38,9 +38,9 @@ if (!($permissionLevel > 0)) {
                 <ul class="nav navbar-nav text-light" id="accordionSidebar">
                     <li class="nav-item"><a class="nav-link" href="index"><i class="fas fa-tachometer-alt"></i><span>Dashboard</span></a></li>
                     <li class="nav-item"><a class="nav-link" href="sessionHistory"><i class="fas fa-tachometer-alt"></i><span>Session History</span></a></li>
-                    <?php if ($permissionLevel > 0) { ?><li class="nav-item"><a class="nav-link active" href="managetutor"><i class="fas fa-user"></i><span>Manage Tutors</span></a></li><?php } ?>
+                    <?php if ($permissionLevel > 0) { ?><li class="nav-item"><a class="nav-link" href="managetutor"><i class="fas fa-user"></i><span>Manage Tutors</span></a></li><?php } ?>
                     <?php if ($permissionLevel > 0) { ?><li class="nav-item"><a class="nav-link" href="managecourses"><i class="fas fa-user"></i><span>Manage Courses</span></a></li><?php } ?>
-                    <?php if ($permissionLevel > 0) { ?><li class="nav-item"><a class="nav-link" href="viewTutorHours"><i class="fas fa-user"></i><span>View Tutor Hours</span></a></li><?php } ?>
+                    <?php if ($permissionLevel > 0) { ?><li class="nav-item"><a class="nav-link active" href="viewTutorHours"><i class="fas fa-user"></i><span>View Tutor Hours</span></a></li><?php } ?>
                     <li class="nav-item"><a class="nav-link" href="reportsession"><i class="icon-notebook"></i><span>Report Session</span></a></li>
                     <li class="nav-item"></li>
                 </ul>
@@ -63,58 +63,27 @@ if (!($permissionLevel > 0)) {
             </nav>
             <div class="container-fluid">
                 <div class="d-sm-flex justify-content-between align-items-center mb-4">
-                    <h3 class="text-dark mb-0">Manage Tutors</h3>
+                    <h3 class="text-dark mb-0">Tutor Hours</h3>
                 </div>
-                <?php
-                if(!empty($_POST)) {
-                    $data = $_POST;
-                    if ($data['action'] == 'add') {
-                        $done = addTutor($data['studentID'], $data['email'], $data['password'], $data['fName'], $data['lName'], $data['major']);
-                        if ($done) {
-                            print("<div class=\"alert alert-success\" role=\"alert\">" . $data['fName'] . " " . $data['lName'] . " has been added.</div>");
-                        } else {
-                            print("<div class=\"alert alert-danger\" role=\"alert\">There was an error in your input, please try again.</div>");
-                        }
-                    } elseif ($data['action'] == 'remove') {
-                        $done = removeTutor($data['email']);
-                        if ($done) {
-                            print("<div class=\"alert alert-success\" role=\"alert\">" . $data['email'] . " has been removed.</div>");
-                        } else {
-                            print("<div class=\"alert alert-danger\" role=\"alert\">There was an error in your input, please try again.</div>");
-                        }
-                    } else {
-                        print("<p>Invalid Option</p>");
-                    }
-                }
-                ?>
                 <div class="row">
                     <div class="col col-lg-12">
                         <div class="card">
                             <div class="card-header d-flex justify-content-between align-items-center">
-                                <h6 class="text-primary font-weight-bold m-0">Add/Remove Tutors</h6>
+                                <h6 class="text-primary font-weight-bold m-0">Select Date</h6>
                             </div>
                             <div class="card-body">
-                                <form class="manage-tutors" method="post" action="managetutor">
-                                    <div class="form-row manage-radio" id="radio">
+                                <form class="tutor-hours" method="post" action="viewTutorHours">
+                                    <div class="form-row date-radio" id="radio">
                                         <div class="col">
-                                            <input type="radio" id="add" class="radio" name="action" value="add" checked=""><label id="add" class="radio-label" for="add">Add</label>
-                                            <input type="radio" id="remove" class="radio" name="action" value="remove"><label id="remove" class="radio-label" for="remove">Remove</label></div>
+                                            <input type="radio" id="week" class="radio" name="action" value="week" checked=""><label id="week" class="radio-label" for="week">Week</label>
+                                            <input type="radio" id="month" class="radio" name="action" value="month"><label id="month" class="radio-label" for="month">Month</label>
+                                        </div>
                                     </div>
                                     <div class="form-row" id="info">
                                         <div class="col">
-                                            <div class="tutor-info" id="form-data">
-                                                <label class="input-label" for="studentID">Student ID</label>
-                                                <input class="form-control input-field" type="number" name="studentID" required>
-                                                <label class="input-label" for="email">Email</label>
-                                                <input class="form-control input-field" type="email" name="email" required>
-                                                <label class="input-label" for="password">Password</label>
-                                                <input class="form-control input-field" type="password" name="password" required>
-                                                <label class="input-label" for="fName">First Name</label>
-                                                <input class="form-control input-field" type="text" name="fName" required>
-                                                <label class="input-label" for="lName">Last Name</label>
-                                                <input class="form-control input-field" type="text" name="lName" required>
-                                                <label class="input-label" for="major">Major</label>
-                                                <input class="form-control input-field" type="text" name="major" required>
+                                            <div class="hours-info" id="form-data">
+                                                <label class="input-label" for="week">Week</label>
+                                                <input class="form-control input-field" type="date" id="date-picker" name="week" <?php if(!empty($_POST)) { if(isset($_POST['week'])) { print("value=" . $_POST['week']); } } ?> required>
                                                 <button class="btn btn-primary input-button" type="submit">Submit</button>
                                             </div>
                                         </div>
@@ -124,31 +93,50 @@ if (!($permissionLevel > 0)) {
                         </div>
                         <div class="card shadow">
                             <div class="card-header py-3">
-                                <p class="text-primary m-0 font-weight-bold">Tutor List</p>
+                                <p class="text-primary m-0 font-weight-bold">Tutor Hours</p>
                             </div>
                             <div class="card-body">
                                 <div class="table-responsive table mt-2" id="dataTable" role="grid" aria-describedby="dataTable_info">
-                                    <table class="table my-0" id="tutorList">
+                                    <table class="table my-0" id="tutorHours">
                                         <thead>
                                             <tr>
                                                 <th>Student ID</th>
                                                 <th>Email</th>
-                                                <th>First Name</th>
-                                                <th>Last Name</th>
-                                                <th>Major</th>
+                                                <th>Name</th>
+                                                <th>Swipe In</th>
+                                                <th>Swipe Out</th>
+                                                <th>Time</th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             <?php
-                                                $tutors = getTutors();
-                                                foreach($tutors as $tutor) {
-                                                    print('<tr>');
-                                                        print('<td>'.$tutor['stuID'].'</td>');
-                                                        print('<td>'.$tutor['email'].'</td>');
-                                                        print('<td>'.$tutor['fName'].'</td>');
-                                                        print('<td>'.$tutor['lName'].'</td>');
-                                                        print('<td>'.$tutor['major'].'</td>');
-                                                    print('</tr>');
+                                                if(!empty($_POST)) {
+                                                    $data = $_POST;
+                                                    if (isset($data['week'])) {
+                                                        $dates = getStartAndEndDate("week", $data['week']);
+                                                    } elseif (isset($data['month'])) {
+                                                        $dates = getStartAndEndDate("month", $data['month']);
+                                                    }
+                                                    $tutorHours = getTutorHours($dates);
+                                                    $totalTutorHours = array();
+                                                    foreach($tutorHours as $tutor) {
+                                                        if (!isset($totalTutorHours[$tutor['studentID']])) {
+                                                            $totalTutorHours[$tutor['studentID']] = $tutor;
+                                                            $totalTutorHours[$tutor['studentID']]['time'] = calculateHours($tutor['swipein'], $tutor['swipeout']);
+                                                        } else {
+                                                            $totalTutorHours[$tutor['studentID']]['time'] = $totalTutorHours[$tutor['studentID']]['time'] + calculateHours($tutor['swipein'], $tutor['swipeout']);
+                                                        }
+                                                    }
+                                                    foreach($totalTutorHours as $tutor) {
+                                                        print('<tr>');
+                                                            print('<td>'.$tutor['studentID'].'</td>');
+                                                            print('<td>'.$tutor['email'].'</td>');
+                                                            print('<td>'.$tutor['name'].'</td>');
+                                                            print('<td>'.$tutor['swipein'].'</td>');
+                                                            print('<td>'.$tutor['swipeout'].'</td>');
+                                                            print('<td>'.gmdate("H:i:s", $tutor['time']).'</td>');
+                                                        print('</tr>');
+                                                    }
                                                 }
                                             ?>
                                         </tbody>
@@ -176,19 +164,31 @@ if (!($permissionLevel > 0)) {
     <script type="text/javascript" src="https://cdn.datatables.net/1.10.2/js/jquery.dataTables.min.js"></script>
     <script src="assets/js/theme.js"></script>
     <script>
-        $(document).ready(function() {
+        $(document).ready(function(){
             $('#radio').change(function() {
-                if ($('.radio:checked').val() === 'add') {
-                    document.getElementById("form-data").innerHTML = '<label class="input-label" for="studentID">Student ID</label><input class="form-control input-field" type="number" name="studentID" required><label class="input-label" for="email">Email</label><input class="form-control input-field" type="email" name="email" required><label class="input-label" for="password">Password</label><input class="form-control input-field" type="password" name="password" required><label class="input-label" for="fName">First Name</label><input class="form-control input-field" type="text" name="fName" required><label class="input-label" for="lName">Last Name</label><input class="form-control input-field" type="text" name="lName" required><label class="input-label" for="major">Major</label><input class="form-control input-field" type="text" name="major" required><button class="btn btn-primary input-button" type="submit">Submit</button>';
+                if ($('.radio:checked').val() === 'week') {
+                    document.getElementById("form-data").innerHTML = '<div class="form-row" id="info"><div class="col"><div class="hours-info" id="form-data"><label class="input-label" for="week">Week</label><input class="form-control input-field" type="date" id="date-picker" name="week" <?php if(!empty($_POST)) { if($_POST['week']) { print("value=" . $_POST['week']); } } ?> required><button class="btn btn-primary input-button" type="submit">Submit</button></div></div></div>';
                 } else {
-                    document.getElementById("form-data").innerHTML = '<label class="input-label" for="email">Email</label><input class="form-control input-field" type="email" name="email" required><button class="btn btn-primary input-button" type="submit">Submit</button>';
+                    document.getElementById("form-data").innerHTML = '<div class="form-row" id="info"><div class="col"><div class="hours-info" id="form-data"><label class="input-label" for="month">Month</label><input class="form-control input-field" type="month" id="date-picker" name="month" <?php if(!empty($_POST)) { if($_POST['month']) { print("value=" . $_POST['month']); } } ?> required><button class="btn btn-primary input-button" type="submit">Submit</button></div></div></div>';
                 }
             });
+            var today = new Date();
+            var dd = today.getDate();
+            var mm = today.getMonth()+1; //January is 0!
+            var yyyy = today.getFullYear();
+            if(dd<10){
+                dd='0'+dd
+            }
+            if(mm<10){
+                mm='0'+mm
+            }
+            today = yyyy+'-'+mm+'-'+dd;
+            document.getElementById("date-picker").setAttribute("max", today);
         });
     </script>
     <script>
         $(document).ready(function(){
-            $('#tutorList').dataTable();
+            $('#tutorHours').dataTable();
         });
     </script>
 </body>

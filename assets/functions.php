@@ -150,6 +150,37 @@ function getTutors() {
     }
 }
 
+/* Function Name: getTutorHours
+* Description: Gets Tutor Hours by Week or Month
+* Parameters: dates
+* Return Value: An array of tutor Hours
+*/
+function getTutorHours($dates) {
+    try {
+        $startdate = $dates['start'];
+        $enddate = $dates['end'];
+        $db = getDB();
+        $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        $sql = "SELECT * FROM `swipes` WHERE `swipein` > '$startdate' AND `swipein` < '$enddate'";
+        $stmt = $db->query($sql);
+        return $stmt->fetchALL(PDO::FETCH_ASSOC);
+    } catch (Exception $e) {
+        //print('<p>'.$e.'</p>');
+        return array();
+    }
+}
+
+/* Function Name: calculateHours
+* Description: Gets Hours between 2 given times
+* Parameters: start, end
+* Return Value: Hours
+*/
+function calculateHours($timeIn, $timeOut) {
+    $date1 = new DateTime($timeIn);
+    $date2 = new DateTime($timeOut);
+    return $date2->diff($date1)->format('%S');
+}
+
 /* Function Name: getTutors
 * Description: Gets a list of active tutors
 * Parameters: None
@@ -203,6 +234,29 @@ function addCourse($coursePrefix, $courseNumber, $courseSection, $courseName, $p
         return false;
     }
 }
+
+/* Function Name: getStartAndEndDate
+* Description: Get Start & End date of week
+* Parameters: type, date
+* Return Value: Start & End of Week
+*/
+function getStartAndEndDate($type, $ddate) {
+    if ($type == "week") {
+        $date = new DateTime($ddate);
+        $week = $date->format("W");
+        $year = $date->format("Y");
+        $dto = new DateTime();
+        $dto->setISODate($year, $week);
+        $ret['start'] = $dto->format('Y-m-d');
+        $dto->modify('+6 days');
+        $ret['end'] = $dto->format('Y-m-d');
+    } elseif ($type == "month") {
+        $ret['start'] = date('Y-m-01', strtotime($ddate));
+        $ret['end'] = date('Y-m-t', strtotime($ddate));
+    }
+    return $ret;
+}
+
 /* HASH EXAMPLE
     $pass = strtoupper(hash('whirlpool', $_POST['password']));
     $pass = sprintf("%s%d%s$%s$", $data['SALT'], 24713018, $pass, "2y");

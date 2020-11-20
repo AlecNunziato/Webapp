@@ -40,6 +40,7 @@ if (!($permissionLevel > 0)) {
                     <li class="nav-item"><a class="nav-link" href="sessionHistory"><i class="fas fa-tachometer-alt"></i><span>Session History</span></a></li>
                     <?php if ($permissionLevel > 0) { ?><li class="nav-item"><a class="nav-link" href="managetutor"><i class="fas fa-user"></i><span>Manage Tutors</span></a></li><?php } ?>
                     <?php if ($permissionLevel > 0) { ?><li class="nav-item"><a class="nav-link active" href="managecourses"><i class="fas fa-user"></i><span>Manage Courses</span></a></li><?php } ?>
+                    <?php if ($permissionLevel > 0) { ?><li class="nav-item"><a class="nav-link" href="viewTutorHours"><i class="fas fa-user"></i><span>View Tutor Hours</span></a></li><?php } ?>
                     <li class="nav-item"><a class="nav-link" href="reportsession"><i class="icon-notebook"></i><span>Report Session</span></a></li>
                     <li class="nav-item"></li>
                 </ul>
