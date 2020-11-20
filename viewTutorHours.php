@@ -103,8 +103,6 @@ if (!($permissionLevel > 0)) {
                                                 <th>Student ID</th>
                                                 <th>Email</th>
                                                 <th>Name</th>
-                                                <th>Swipe In</th>
-                                                <th>Swipe Out</th>
                                                 <th>Time</th>
                                             </tr>
                                         </thead>
@@ -132,8 +130,6 @@ if (!($permissionLevel > 0)) {
                                                             print('<td>'.$tutor['studentID'].'</td>');
                                                             print('<td>'.$tutor['email'].'</td>');
                                                             print('<td>'.$tutor['name'].'</td>');
-                                                            print('<td>'.$tutor['swipein'].'</td>');
-                                                            print('<td>'.$tutor['swipeout'].'</td>');
                                                             print('<td>'.gmdate("H:i:s", $tutor['time']).'</td>');
                                                         print('</tr>');
                                                     }
