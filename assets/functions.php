@@ -178,7 +178,7 @@ function getTutorHours($dates) {
 function calculateHours($timeIn, $timeOut) {
     $date1 = new DateTime($timeIn);
     $date2 = new DateTime($timeOut);
-    return $date2->diff($date1)->format('%S');
+    return $date2->getTimestamp() - $date1->getTimestamp();
 }
 
 /* Function Name: getTutors
