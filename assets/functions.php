@@ -102,7 +102,7 @@ function reportSession($stuID, $email, $fName, $lName, $major, $course, $notes, 
 * Return Value: Count of sessions this month
 */
 function getSessionsThisMonth() {
-    $currMonth = date('01-m-Y');
+    $currMonth = date('Y-m-01');
     try {
         $db = getDB();
         $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
