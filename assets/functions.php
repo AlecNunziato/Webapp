@@ -96,6 +96,25 @@ function reportSession($stuID, $email, $fName, $lName, $major, $course, $notes, 
     }
 }
 
+/* Function Name: getSessionsThisMonth
+* Description: Get # of Sessions this month
+* Parameters: None
+* Return Value: Count of sessions this month
+*/
+function getSessionsThisMonth() {
+    $currMonth = date('01-m-Y');
+    try {
+        $db = getDB();
+        $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        $sql = "SELECT * FROM `sessions` WHERE `timeTutored` > '$currMonth'";
+        $stmt = $db->query($sql);
+        return $stmt->fetchALL(PDO::FETCH_ASSOC);
+    } catch (Exception $e) {
+        //print('<p>'.$e.'</p>');
+        return array();
+    }
+}
+
 /* Function Name: addTutor
 * Description: Adds Tutor(s) based on user input 
 * Parameters: stuID, email, password, fName, lName, major
